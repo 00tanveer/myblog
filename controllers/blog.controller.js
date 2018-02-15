@@ -1,0 +1,68 @@
+// Accessing the service that we just created
+var BlogService = require('../services/blog.service')
+
+// Saving the context of the module inside the _this variable
+_this = this
+
+// Async Controller function to get the Blog List
+export.getBlogs = async function(req, res, next){
+  // Check the existence of the query parameters, if they
+  // don't exist set default values
+  var page = req.query.page ? req.query.page: 1;
+  var limit = req.query.limit ? req.query.limit : 10;
+
+  try{
+    var blogs = await BlogService.getBlogs({}, page, limit)
+    // Return the blogs list with the appropirate HTTP Status code and message
+    return res.status(200).json({status: 200, data: blogs, message: "Successfully blogs received"});
+  } catch(e){
+    // Return an Error response message with code and error message
+    return res.status(400).json({status: 400, message: e.message});
+  }
+}
+
+exports.createBlog = async function(req, res, next){
+  // Req.body contains the form submit values
+  var blog = {
+    title: req.body.title,
+    body: req.body.body
+  }
+
+  try{
+    // Calling the service function with the new object from the request body
+    var createdBlog = await BlogService.createBlog(blog)
+    return res.status(201).json({status: 201, data: createdBlog, message: "Successfully created blog"})
+  }
+}
+
+exports.updateBlog = async function(req, res, next){
+  // Id is necessary for the update
+  if(!req.body._id){
+    return res.status(400).json({status: 400, message: "Id must be present"})
+  }
+
+  var id = req.body._id;
+  console.log(req.body)
+
+  var blog = {
+    id,
+    title: req.body.title ? req.body.title : null,
+    body: req.body.body ? req.body.body : null
+  }
+
+  try{
+    var updatedBlog = await BlogService.updateBlog(blog)
+    return res.status(200).json({status: 200, data: updatedBlog, message: "Successfully updated blog"})
+  }
+}
+
+exports.removeBlog = async function(req, res, next){
+  var id = req.params.id;
+
+  try{
+    var deleted = await BlogService.deleteBlog(id)
+    return res.status(204).json({status: 204, message: "Successfully blog deleted"})
+  } catch(e){
+    return res.status(400).json({status: 400, message: e.message})
+  }
+}

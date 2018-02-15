@@ -3,7 +3,7 @@ var mongoosePaginate = require('mongoose-paginate')
 
 var blogSchema = new mongoose.Schema({
 	title: String,
-	date: Date,
+	date: {type: Schema.Types.Date, default : Date.now()},
 	body: String
 })
 
