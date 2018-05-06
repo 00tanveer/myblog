@@ -32,22 +32,6 @@ app.use(function(req, res, next) {
 	next();
 });
 
-//configuring Express session and Passport
-var expressSession = require('express-session');
-var passport = require('passport');
-app.use(expressSession({secret: 'tanmaster'}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Using the flash middleware provided by connect-flash to store messages in session
-// and displaying in templates
-var flash = require('connect-flash');
-app.use(flash());
-
-// Initialize Passport
-var initPassport = require('./services/passport/init');
-initPassport(passport);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -62,10 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Get the routes
 var api = require('./routes/api.route');
-var passportRoutes = require('./routes/passport/passport.route')(passport);
 app.use('/', index);
 app.use('/blogs', api);
-app.use('/authenticate', passportRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
