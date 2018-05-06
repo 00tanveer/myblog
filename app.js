@@ -1,4 +1,5 @@
 var express = require('express');
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -10,11 +11,14 @@ var bluebird = require('bluebird')
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+
+
+// Initialize express app
 var app = express();
 
 //mongoose setup
 mongoose.Promise = bluebird
-mongoose.connect('mongodb://127.0.0.1:27017/myblog', { useMongoClient: true})
+mongoose.connect('mongodb://127.0.0.1:27017/myblog')
 .then(()=> { console.log(`Successfully Connected to the Mongodb database
 at URL : mongodb://127.0.0.1:27017/myblog`)})
 .catch(()=> { console.log(`Error Connecting to the Mongodb databae
@@ -28,6 +32,22 @@ app.use(function(req, res, next) {
 	next();
 });
 
+//configuring Express session and Passport
+var expressSession = require('express-session');
+var passport = require('passport');
+app.use(expressSession({secret: 'tanmaster'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
+
+// Initialize Passport
+var initPassport = require('./services/passport/init');
+initPassport(passport);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -40,8 +60,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Get the routes
+var api = require('./routes/api.route');
+var passportRoutes = require('./routes/passport/passport.route')(passport);
 app.use('/', index);
-app.use('/users', users);
+app.use('/blogs', api);
+app.use('/authenticate', passportRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

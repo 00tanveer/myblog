@@ -23,11 +23,13 @@ exports.createBlog = async function(blog){
 	// Creating a new Mongoose object by using the new keyword
 	var newBlog = new Blog({
 		title: blog.title,
-		body: blog.body
+		body: blog.body,
+		delta_ops: blog.delta_ops
 	})
 
 	try{
 		// Saving the blog
+		console.log(newBlog);
 		var savedBlog = await newBlog.save()
 		return savedBlog;
 	} catch(e){
@@ -53,6 +55,7 @@ exports.updateBlog = async function(blog){
 	//Edit the Blog Object
 	oldBlog.title = blog.title
 	oldBlog.body = blog.body
+	oldBlog.delta_ops = blog.delta_ops
 
 	console.log(oldBlog)
 

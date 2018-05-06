@@ -3,11 +3,12 @@ var mongoosePaginate = require('mongoose-paginate')
 
 var blogSchema = new mongoose.Schema({
 	title: String,
-	date: {type: Schema.Types.Date, default : Date.now()},
-	body: String
+	date: {type: mongoose.Schema.Types.Date, default : Date.now()},
+	body: String,
+	delta_ops: [{}]
 })
 
-blogSchema.plugin(mongoosePaginate)
-const Blog = mongoose.model('Blog', blogSchema)
+blogSchema.plugin(mongoosePaginate);
+const Blog = mongoose.model('Blog', blogSchema);
 
-model.exports = Blog;
+module.exports = Blog;

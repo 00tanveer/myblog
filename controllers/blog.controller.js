@@ -5,7 +5,7 @@ var BlogService = require('../services/blog.service')
 _this = this
 
 // Async Controller function to get the Blog List
-export.getBlogs = async function(req, res, next){
+exports.getBlogs = async function(req, res, next){
   // Check the existence of the query parameters, if they
   // don't exist set default values
   var page = req.query.page ? req.query.page: 1;
@@ -23,15 +23,20 @@ export.getBlogs = async function(req, res, next){
 
 exports.createBlog = async function(req, res, next){
   // Req.body contains the form submit values
+  console.log(req.body);
   var blog = {
-    title: req.body.title,
-    body: req.body.body
+    title: req.body.blog.title,
+    body: req.body.blog.body,
+    delta_ops: req.body.blog.delta_ops
   }
 
   try{
     // Calling the service function with the new object from the request body
     var createdBlog = await BlogService.createBlog(blog)
     return res.status(201).json({status: 201, data: createdBlog, message: "Successfully created blog"})
+  } catch(e){
+    //Return an Error Response Message with Code and the Error Message.
+    return res.status(400).json({status: 400, message: "Blog creation was unsuccesfull"})
   }
 }
 
@@ -47,12 +52,15 @@ exports.updateBlog = async function(req, res, next){
   var blog = {
     id,
     title: req.body.title ? req.body.title : null,
-    body: req.body.body ? req.body.body : null
+    body: req.body.body ? req.body.body : null,
+    delta_ops: req.body.delta_ops ? req.body.delta_ops : null
   }
 
   try{
     var updatedBlog = await BlogService.updateBlog(blog)
     return res.status(200).json({status: 200, data: updatedBlog, message: "Successfully updated blog"})
+  } catch(e){
+        return res.status(400).json({status: 400., message: e.message})
   }
 }
 
