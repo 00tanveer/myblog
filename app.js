@@ -32,6 +32,34 @@ app.use(function(req, res, next) {
 	next();
 });
 
+//Setting up auth0 authentication middleware
+const jwt = require('express-jwt');
+const jwtAuths = require('express-jwt-authz');
+const jwksRsa = require('jwks-rsa');
+
+const checkJwt = jwt({
+  // Dynamically provide a signing key
+  // based on the kid in the header and 
+  // the signing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://tansayshello.eu.auth0.com/.well-known/jwks.json`
+  }),
+
+  // Validate the audience and the issuer.
+  audience: `http://localhost:3000`,
+  issuer: `https://tansayshello.eu.auth0.com/`,
+  algorithms: ['RS256']
+});
+
+app.use(checkJwt);
+
+app.get('/authorized', function (req, res) {
+  res.send('Secured Resource');
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
