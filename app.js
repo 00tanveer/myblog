@@ -25,40 +25,13 @@ at URL : mongodb://127.0.0.1:27017/myblog`)})
 at URL : mongodb://127.0.0.1:27017/myblog`)})
 
 //CORS configuration
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header("Access-Control-Allow-Mehthods", "GET, POST, PUT, DELETE, OPTIONS");
-	next();
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Mehthods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
 });
 
-//Setting up auth0 authentication middleware
-const jwt = require('express-jwt');
-const jwtAuths = require('express-jwt-authz');
-const jwksRsa = require('jwks-rsa');
-
-const checkJwt = jwt({
-  // Dynamically provide a signing key
-  // based on the kid in the header and 
-  // the signing keys provided by the JWKS endpoint.
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://tansayshello.eu.auth0.com/.well-known/jwks.json`
-  }),
-
-  // Validate the audience and the issuer.
-  audience: `http://localhost:3000`,
-  issuer: `https://tansayshello.eu.auth0.com/`,
-  algorithms: ['RS256']
-});
-
-app.use(checkJwt);
-
-app.get('/authorized', function (req, res) {
-  res.send('Secured Resource');
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,6 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var api = require('./routes/api.route');
 app.use('/', index);
 app.use('/blogs', api);
+var auth = require('./auth/AuthController');
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
