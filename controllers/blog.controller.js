@@ -13,8 +13,9 @@ exports.getBlogs = async function(req, res, next){
 
   try{
     var blogs = await BlogService.getBlogs({}, page, limit)
+    //console.log(blogs);
     // Return the blogs list with the appropirate HTTP Status code and message
-    return res.status(200).json({status: 200, data: blogs, message: "Successfully blogs received"});
+    return res.status(200).json({status: 200, data: blogs.docs, message: "Successfully blogs received"});
   } catch(e){
     // Return an Error response message with code and error message
     return res.status(400).json({status: 400, message: e.message});
@@ -42,18 +43,18 @@ exports.createBlog = async function(req, res, next){
 
 exports.updateBlog = async function(req, res, next){
   // Id is necessary for the update
-  if(!req.body._id){
-    return res.status(400).json({status: 400, message: "Id must be present"})
+  console.log(req.body);
+  if(!req.body.blog.title){
+    return res.status(400).json({status: 400, message: "Title must be present"})
   }
 
-  var id = req.body._id;
+  var title = req.body.blog.title;
   console.log(req.body)
 
   var blog = {
-    id,
-    title: req.body.title ? req.body.title : null,
-    body: req.body.body ? req.body.body : null,
-    delta_ops: req.body.delta_ops ? req.body.delta_ops : null
+    title: title,
+    body: req.body.blog.body ? req.body.blog.body : null,
+    delta_ops: req.body.blog.delta_ops ? req.body.blog.delta_ops : null
   }
 
   try{
