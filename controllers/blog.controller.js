@@ -1,5 +1,9 @@
 // Accessing the service that we just created
-var BlogService = require('../services/blog.service')
+var BlogService = require('../services/blog.service');
+const path = require('path');
+var cloudinary = require('cloudinary');
+const multer = require('multer');
+const config = require('../config');
 
 // Saving the context of the module inside the _this variable
 _this = this
@@ -43,13 +47,11 @@ exports.createBlog = async function(req, res, next){
 
 exports.updateBlog = async function(req, res, next){
   // Id is necessary for the update
-  console.log(req.body);
   if(!req.body.blog.title){
     return res.status(400).json({status: 400, message: "Title must be present"})
   }
 
   var title = req.body.blog.title;
-  console.log(req.body)
 
   var blog = {
     title: title,
@@ -74,4 +76,51 @@ exports.removeBlog = async function(req, res, next){
   } catch(e){
     return res.status(400).json({status: 400, message: e.message})
   }
+}
+
+const upload = multer({
+  dest:'images/',
+  limits: {fileSize: 10000000, files: 1},
+  fileFilter: (req, file, callback) => {
+    if (!file.originalname.match(/\.(jpg|jpeg)$/)) {
+      return callback(new Error('Only Images are allowed !'), false)
+  }
+
+  callback(null, true);
+  }
+}).single('image')
+
+exports.uploadPicture = async function(req, res, next) {
+  console.log(req.files.file);
+  //res.send(req.files.file);
+  let imageFile = req.files.file;
+  console.log(req.body);
+
+  imageFile.mv(`./public/${req.body.filename}.jpg`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
+  // }
+  //   res.json({file: `public/${req.body.filename}.jpg`});
+  // });
+  
+    
+  console.log(config.CLOUD_NAME);
+  console.log(config.API_KEY);
+  console.log(config.API_SECRET);
+  cloudinary.config({
+    cloud_name: config.CLOUD_NAME,
+    api_key: config.API_KEY,
+    api_secret: config.API_SECRET
+  });
+  console.log(req.body.filename);
+  
+  cloudinary.uploader.upload(`./public/${req.body.filename}.jpg`, function(result) {
+    if (result) {
+      console.log(result);
+      
+      res.json(result);
+    }
+  })
 }

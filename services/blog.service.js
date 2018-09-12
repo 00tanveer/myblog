@@ -12,7 +12,7 @@ exports.getBlogs = async function(query, page, limit){
 	try{
 		var blogs = await Blog.paginate(query, options)
 		//return the blog list that was returned by the mongoose promise
-		console.log(blogs.docs);
+		//console.log(blogs.docs);
 		return blogs;
 	} catch(e){
 		//return an Error message describing the reason
@@ -40,7 +40,6 @@ exports.createBlog = async function(blog){
 }
 
 exports.updateBlog = async function(blog){
-	console.log(blog);
 	var title = blog.title
 	// try{
 	// 	// find the old Blog objectt by the id
