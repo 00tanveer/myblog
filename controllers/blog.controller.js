@@ -52,8 +52,9 @@ exports.updateBlog = async function(req, res, next){
   }
 
   var title = req.body.blog.title;
-
+  console.log(title);
   var blog = {
+    id: req.body.blog.id,
     title: title,
     body: req.body.blog.body ? req.body.blog.body : null,
     delta_ops: req.body.blog.delta_ops ? req.body.blog.delta_ops : null

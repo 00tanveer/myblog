@@ -1,4 +1,5 @@
-var Blog = require('../models/blog')
+var Blog = require('../models/blog');
+var mongoose = require('mongoose');
 
 _this = this
 
@@ -41,6 +42,7 @@ exports.createBlog = async function(blog){
 
 exports.updateBlog = async function(blog){
 	var title = blog.title
+	var id = mongoose.Types.ObjectId(blog.id);
 	// try{
 	// 	// find the old Blog objectt by the id
 	// 	var oldBlog = await Blog.findById(title);
@@ -66,7 +68,7 @@ exports.updateBlog = async function(blog){
 	// 	throw Error("An Error occurred while updating the Blog")
 	// }
 
-	var query = {'title': title};
+	var query = {'_id': id};
 	var update = blog;
 	var options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
