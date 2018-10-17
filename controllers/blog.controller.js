@@ -41,7 +41,7 @@ exports.createBlog = async function(req, res, next){
     return res.status(201).json({status: 201, data: createdBlog, message: "Successfully created blog"})
   } catch(e){
     //Return an Error Response Message with Code and the Error Message.
-    return res.status(400).json({status: 400, message: "Blog creation was unsuccesfull"})
+    return res.status(400).json({status: 400, message: "Blog creation was unsuccessful"})
   }
 }
 
