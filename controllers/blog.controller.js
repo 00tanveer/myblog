@@ -35,6 +35,7 @@ exports.createBlog = async function(req, res, next) {
   console.log(req.body);
   var blog = {
     title: req.body.blog.title,
+    tags: req.body.blog.tags,
     body: req.body.blog.body,
     delta_ops: req.body.blog.delta_ops
   };
@@ -65,9 +66,14 @@ exports.updateBlog = async function(req, res, next) {
 
   var title = req.body.blog.title;
   console.log(title);
+  console.log(req.body.blog.date);
+  console.log(req.body.blog.tags);
+  console.log(req.body.blog.tags.length > 0);
   var blog = {
     id: req.body.blog.id,
+    date: req.body.blog.date ? req.body.blog.date : null,
     title: title,
+    tags: req.body.blog.tags.length > 0 ? req.body.blog.tags : [],
     body: req.body.blog.body ? req.body.blog.body : null,
     delta_ops: req.body.blog.delta_ops ? req.body.blog.delta_ops : null
   };
