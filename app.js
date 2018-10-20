@@ -19,11 +19,12 @@ var app = express();
 
 //mongoose setup
 mongoose.Promise = bluebird
-mongoose.connect('mongodb://127.0.0.1:27017/myblog')
+//mongoose.connect('mongodb://127.0.0.1:27017/myblog')
+mongoose.connect('mongodb://00tanveer:3djrl9341046@ds237363.mlab.com:37363/cityoftroy')
 .then(()=> { console.log(`Successfully Connected to the Mongodb database
-at URL : mongodb://127.0.0.1:27017/myblog`)})
+at URL : mongodb://<dbuser>:<dbpassword>@ds237363.mlab.com:37363/cityoftroy`)})
 .catch(()=> { console.log(`Error Connecting to the Mongodb databae
-at URL : mongodb://127.0.0.1:27017/myblog`)})
+at URL : mongodb://<dbuser>:<dbpassword>@ds237363.mlab.com:37363/cityoftroy`)})
 
 //CORS configuration
 app.use(function (req, res, next) {
