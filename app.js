@@ -34,6 +34,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
