@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Editor from "./RichTextEditor/Editor";
 
 import { Route } from "react-router-dom";
+import AuthService from '../utils/AuthService';
 
 // const screens = {
 //   'fashion': {
@@ -29,25 +30,14 @@ import { Route } from "react-router-dom";
 //     screen: <Contact {...props}/>
 //   }
 // }
-
+const auth = new AuthService();
 class App extends Component {
   
   render() {
     return (
       <div>
         <Route exact strict path="/" render={props => <Landing {...props} />} />
-        {/* {
-          Object.keys(screens).map((key) => {
-            return(
-              <Route 
-                exact
-                strict
-                path={`/${key}/`}
-                render={props => screens[key]}
-              />
-            )
-          })
-        } */}
+        <Route exact strict path='/login' render={(props)=><RegisterOrLogin mode={'Login'} {...props} />} />
         <Route
           exact
           strict
@@ -58,7 +48,7 @@ class App extends Component {
           exact
           strict
           path="/fashion/post"
-          render={props => <Editor {...props} />}
+          render={props => <Editor auth={auth} {...props} />}
         />
       </div>
     );

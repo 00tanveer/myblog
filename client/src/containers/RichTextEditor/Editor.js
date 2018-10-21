@@ -6,6 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Button from "../../components/ui/Button";
 import FormInput from "../../components/ui/Input";
+import withAuth from '../../components/HOC/withAuth';
 
 const Input = styled.input``;
 const StyledInput = Input.withComponent(Button);
@@ -397,4 +398,4 @@ Editor.formats = [
   "background"
 ];
 
-export default Editor;
+export default withAuth(Editor);
