@@ -14,6 +14,7 @@ export default class AuthService {
             username: username,
             password: password
         }).then(res => {
+            //console.log(res.data);
             //console.log(res.data.token);
             this.setToken(res.data.token);
             return Promise.resolve(res);
@@ -34,7 +35,7 @@ export default class AuthService {
     loggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // Getting token from localStorage
-        console.log(token);
+        //console.log(token);
         return !!token && !this.isTokenExpired(token) // handwaiving here
     }
 

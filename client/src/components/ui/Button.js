@@ -19,6 +19,12 @@ const Button = props => {
       color: ${theme.white};
       transform: scale(1.1);
     }
+    .post-button & {
+      position: fixed;
+      top: 90px;
+      right: 50%;
+      transform: translate(50%, 0);
+    }
   `;
   const LinkButton = Button.withComponent(Link);
   const StyledLinkButton = LinkButton.extend`
