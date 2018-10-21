@@ -65,6 +65,7 @@ exports.updateBlog = async function(req, res, next) {
   }
 
   var title = req.body.blog.title;
+  console.log(req.body.blog.id);
   console.log(title);
   console.log(req.body.blog.date);
   console.log(req.body.blog.tags);
@@ -86,6 +87,7 @@ exports.updateBlog = async function(req, res, next) {
       message: "Successfully updated blog"
     });
   } catch (e) {
+    console.log(e.message);
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
