@@ -6,6 +6,7 @@ import Art from './pages/Art';
 import Others from './pages/Others';
 import Contact from './pages/Contact';
 import Editor from "./RichTextEditor/Editor";
+import RegisterOrLogin from './pages/RegisterOrLogin';
 
 import { Route } from "react-router-dom";
 import AuthService from '../utils/AuthService';

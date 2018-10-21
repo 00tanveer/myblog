@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "http-proxy-middleware": "^0.19.0",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "quill-delta-to-html": "^0.10.5",
     "react": "^16.5.2",
