@@ -233,8 +233,7 @@ class Menu extends React.Component {
       <ThemeProvider theme={theme}>
         <StyledLol heightOrWidth={this.returnHeightOrWidth()}>
           <div className="navigation">
-            <input 
-              type="checkbox" className="checkbox" id="navi-toggle" />
+            <input type="checkbox" className="checkbox" id="navi-toggle" />
             <label htmlFor="navi-toggle" className="button">
               <span className="icon">&nbsp;</span>
             </label>
@@ -263,8 +262,8 @@ class Menu extends React.Component {
                   </Link>
                 </li>
                 <li className="item">
-                  <Link to="/others" className="link_">
-                    Others
+                  <Link to="/lifestyle" className="link_">
+                    Lifestyle
                   </Link>
                 </li>
                 <li className="item">

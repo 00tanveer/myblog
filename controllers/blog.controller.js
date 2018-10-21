@@ -34,10 +34,9 @@ exports.createBlog = async function(req, res, next) {
   // Req.body contains the form submit values
   console.log(req.body);
   var blog = {
-    title: req.body.blog.title,
-    tags: req.body.blog.tags,
-    body: req.body.blog.body,
-    delta_ops: req.body.blog.delta_ops
+    title: "",
+    tags: [],
+    delta_ops: [{}]
   };
 
   try {

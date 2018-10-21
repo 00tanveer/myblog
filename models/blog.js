@@ -6,7 +6,8 @@ var blogSchema = new mongoose.Schema({
   date: { type: mongoose.Schema.Types.Date, default: Date.now() },
   tags: [String],
   delta_ops: [{}],
-  tags: [String]
+  genre: String,
+  posted: { type: Boolean, default: false }
 });
 
 blogSchema.plugin(mongoosePaginate);
