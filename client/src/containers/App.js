@@ -48,8 +48,8 @@ class App extends Component {
         <Route
           exact
           strict
-          path="/fashion/post"
-          render={props => <Editor auth={auth} {...props} />}
+          path="/fashion/post/:blogId"
+          render={props => <Editor genre="fashion" auth={auth} {...props} />}
         />
       </div>
     );
