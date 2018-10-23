@@ -33,15 +33,14 @@ import AuthService from '../utils/AuthService';
 // }
 const auth = new AuthService();
 class App extends Component {
-  
+
   render() {
     return (
       <div>
         <Route exact strict path="/" render={props => <Landing {...props} />} />
-        <Route exact strict path='/login' render={(props)=><RegisterOrLogin mode={'Login'} {...props} />} />
+        <Route exact strict path='/login' render={(props) => <RegisterOrLogin mode={'Login'} {...props} />} />
         <Route
           exact
-          strict
           path="/fashion"
           render={props => <Fashion {...props} />}
         />

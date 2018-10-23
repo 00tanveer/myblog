@@ -42,31 +42,29 @@ class RegisterOrLogin extends React.Component {
                     alert(err);
                 })
         }
-        
+
     }
 
     handleUserName(e) {
         e.preventDefault();
-        console.log(e.target.value);
-        this.setState({username: e.target.value}, () => {
+        this.setState({ username: e.target.value }, () => {
             //console.log(this.state);
         })
     }
 
     handlePassword(e) {
         e.preventDefault();
-        console.log(e.target.value);
-        this.setState({password: e.target.value}, () => {
+        this.setState({ password: e.target.value }, () => {
             //console.log(this.state);
         })
     }
     render() {
         return (
-            <Form 
+            <Form
                 mode={this.props.mode}
-                usernameHandler = {this.handleUserName}
-                passwordHandler = {this.handlePassword}
-                handleSubmit = {this.handleFormSubmit} />
+                usernameHandler={this.handleUserName}
+                passwordHandler={this.handlePassword}
+                handleSubmit={this.handleFormSubmit} />
         );
     }
 }

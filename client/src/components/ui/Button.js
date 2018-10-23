@@ -36,8 +36,8 @@ const Button = props => {
   return props.link ? (
     <StyledLinkButton to={props.to}>{props.label}</StyledLinkButton>
   ) : (
-    <Button onClick={props.clickHandler}>{props.label}</Button>
-  );
+      <Button onClick={props.clickHandler}>{props.label}</Button>
+    );
 };
 
 export default Button;
