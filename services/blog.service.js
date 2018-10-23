@@ -40,6 +40,7 @@ exports.getBlog = async function(query, page, limit) {
 exports.createBlog = async function(blog) {
   // Creating a new Mongoose object by using the new keyword
   var newBlog = new Blog({
+	genre: blog.genre,
     title: blog.title,
     tags: blog.tags,
     delta_ops: blog.delta_ops

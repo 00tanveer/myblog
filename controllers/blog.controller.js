@@ -13,11 +13,13 @@ _this = this;
 exports.getBlogs = async function(req, res, next) {
   // Check the existence of the query parameters, if they
   // don't exist set default values
+  var genre = req.params.genre;
+  console.log(genre);
   var page = req.query.page ? req.query.page : 1;
   var limit = req.query.limit ? req.query.limit : 10;
 
   try {
-    var blogs = await BlogService.getBlogs({}, page, limit);
+    var blogs = await BlogService.getBlogs({genre: genre}, page, limit);
     //console.log(blogs);
     // Return the blogs list with the appropirate HTTP Status code and message
     return res.status(200).json({
@@ -54,8 +56,10 @@ exports.getBlog = async function(req, res, next) {
 
 exports.createBlog = async function(req, res, next) {
   // Req.body contains the form submit values
+  var genre = req.params.genre;
   console.log(req.body);
   var blog = {
+    genre: genre,
     title: "",
     tags: [],
     delta_ops: [{}]
@@ -97,7 +101,8 @@ exports.updateBlog = async function(req, res, next) {
     title: title,
     tags: req.body.blog.tags.length > 0 ? req.body.blog.tags : [],
     body: req.body.blog.body ? req.body.blog.body : null,
-    delta_ops: req.body.blog.delta_ops ? req.body.blog.delta_ops : null
+    delta_ops: req.body.blog.delta_ops ? req.body.blog.delta_ops : null,
+    posted: req.body.blog.posted ? req.body.blog.posted : false
   };
 
   try {
