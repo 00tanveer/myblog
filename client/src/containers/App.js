@@ -42,7 +42,7 @@ class App extends Component {
         <Route
           exact
           path="/fashion"
-          render={props => <Fashion {...props} />}
+          render={props => <Fashion genre="fashion" {...props} />}
         />
         <Route
           exact

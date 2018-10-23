@@ -130,9 +130,11 @@ class Editor extends React.Component {
           //console.log(this.state.blogId);
           let path = '/blogs/' + this.state.blogId;
           axios.get(path).then(res => {
-            //console.log(res.data.data);
+            console.log(res.data.data);
             if (res.data.data.length !== 0) {
-              this.quillRef.setContents(res.data.data.docs[0].delta_ops);
+              if(res.data.data.docs[0].delta_ops[0] !== null) {
+                this.quillRef.setContents(res.data.data.docs[0].delta_ops);
+              }
               this.setState(
                 {
                   blogId: res.data.data.docs[0]._id,
@@ -284,7 +286,8 @@ class Editor extends React.Component {
       date: Date.now(),
       title: this.state.title,
       tags: this.state.selectedTags,
-      delta_ops: this.quillRef.getContents().ops
+      delta_ops: this.quillRef.getContents().ops,
+      posted : true
     }
     console.log(blog);
     axios.put('/blogs/update', { blog }).then(res => {

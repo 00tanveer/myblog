@@ -123,7 +123,7 @@ class Card extends React.Component {
     let html = converter.convert();
     console.log(html);
     console.log(ReactHtmlParser(html));
-    let ExcerptText = ReactHtmlParser(html)[0].props.children[0].props.children[0];
+    let ExcerptText = ReactHtmlParser(html)[0].props.children[0];
     console.log(ExcerptText);
     console.log(typeof ExcerptText);
     let titleImageLink;
