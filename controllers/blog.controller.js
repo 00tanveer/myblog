@@ -1,4 +1,5 @@
 // Accessing the service that we just created
+var mongoose = require("mongoose");
 var BlogService = require("../services/blog.service");
 const path = require("path");
 var cloudinary = require("cloudinary");
@@ -23,6 +24,27 @@ exports.getBlogs = async function(req, res, next) {
       status: 200,
       data: blogs.docs,
       message: "Successfully blogs received"
+    });
+  } catch (e) {
+    // Return an Error response message with code and error message
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+exports.getBlog = async function(req, res, next) {
+  console.log("blogId ", req.params.blogId);
+  var query = {
+    _id: mongoose.Types.ObjectId(req.params.blogId)
+  };
+  var page = 1;
+  var limit = 1;
+  try {
+    var blog = await BlogService.getBlog(query, page, limit);
+    // Return the single blog with the appropriate HTTP status
+    return res.status(200).json({
+      status: 200,
+      data: blog,
+      message: "Successfully blog received"
     });
   } catch (e) {
     // Return an Error response message with code and error message
@@ -70,7 +92,7 @@ exports.updateBlog = async function(req, res, next) {
   console.log(req.body.blog.tags);
   console.log(req.body.blog.tags.length > 0);
   var blog = {
-    id: req.body.blog.id,
+    id: mongoose.Types.ObjectId(req.body.blog.id),
     date: req.body.blog.date ? req.body.blog.date : null,
     title: title,
     tags: req.body.blog.tags.length > 0 ? req.body.blog.tags : [],
@@ -150,8 +172,10 @@ exports.uploadPicture = async function(req, res, next) {
 };
 
 exports.getTags = async function(req, res, next) {
+  console.log("getTags called");
   try {
     var tags = await BlogService.getTags({});
+    console.log(tags);
     return res.status(200).json({
       status: 200,
       data: tags,

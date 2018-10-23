@@ -10,7 +10,7 @@ exports.getBlogs = async function(query, page, limit) {
     page,
     limit
   };
-  // Ty Catch the awaited promise to handle the error
+  // Try Catch the awaited promise to handle the error
   try {
     var blogs = await Blog.paginate(query, options);
     //return the blog list that was returned by the mongoose promise
@@ -19,6 +19,21 @@ exports.getBlogs = async function(query, page, limit) {
   } catch (e) {
     //return an Error message describing the reason
     throw Error("Error while Paginating Blogs");
+  }
+};
+
+exports.getBlog = async function(query, page, limit) {
+  // Options setup for the mongoose paginate
+  var options = {
+    page,
+    limit
+  };
+  try {
+    var blog = await Blog.paginate(query, options);
+    // return the blog that was returned by the mongoose promise
+    return blog;
+  } catch (e) {
+    throw Error("Error while paginating Blogs");
   }
 };
 
@@ -32,7 +47,6 @@ exports.createBlog = async function(blog) {
 
   try {
     // Saving the blog
-    console.log(newBlog);
     var savedBlog = await newBlog.save();
     return savedBlog;
   } catch (e) {
