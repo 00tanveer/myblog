@@ -15,11 +15,12 @@ exports.getReaders = async function(req, res, next) {
 };
 
 exports.createReader = async function(req, res, next) {
+  console.log(req.body);
   var reader = {
-    name: req.body.name,
-    email: req.body.email,
-    isSubscriber: req.body.isSubscriber,
-    messages: req.body.message ? [req.body.message] : []
+    name: req.body.reader.name,
+    email: req.body.reader.email,
+    isSubscriber: req.body.reader.isSubscriber,
+    messages: req.body.reader.message ? [req.body.reader.message] : []
   };
 
   try {
