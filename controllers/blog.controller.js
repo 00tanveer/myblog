@@ -5,7 +5,7 @@ const path = require("path");
 var cloudinary = require("cloudinary");
 const multer = require("multer");
 const config = require("../config");
-const tags = require('../models/tags');
+const tags = require("../models/tags");
 
 // Saving the context of the module inside the _this variable
 _this = this;
@@ -21,7 +21,11 @@ exports.getBlogs = async function(req, res, next) {
   var limit = req.query.limit ? req.query.limit : 10;
 
   try {
-    var blogs = await BlogService.getBlogs({genre: genre, posted: posted}, page, limit);
+    var blogs = await BlogService.getBlogs(
+      { genre: genre, posted: posted },
+      page,
+      limit
+    );
     //console.log(blogs);
     // Return the blogs list with the appropirate HTTP Status code and message
     return res.status(200).json({
@@ -181,12 +185,15 @@ exports.uploadPicture = async function(req, res, next) {
 exports.getTags = async function(req, res, next) {
   console.log("getTags called");
   let genre = req.params.genre;
+  console.log(config);
+  console.log(tags);
+  console.log(genre);
   try {
-    var tags = tags[genre];
-    console.log(tags);
+    var ts = tags[genre];
+    console.log(ts);
     return res.status(200).json({
       status: 200,
-      data: tags,
+      data: ts,
       message: "Successfully tags received"
     });
   } catch (e) {
