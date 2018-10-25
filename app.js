@@ -62,9 +62,11 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Get the routes
-var api = require("./routes/api.route");
+var blog_api = require("./routes/api/blog.route");
+var reader_api = require("./routes/api/reader.route");
 app.use("/", index);
-app.use("/blogs", api);
+app.use("/blogs", blog_api);
+app.use("/readers", reader_api);
 var auth = require("./auth/AuthController");
 app.use("/auth", auth);
 
