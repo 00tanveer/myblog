@@ -5,6 +5,7 @@ const path = require("path");
 var cloudinary = require("cloudinary");
 const multer = require("multer");
 const config = require("../config");
+const tags = require('../models/tags');
 
 // Saving the context of the module inside the _this variable
 _this = this;
@@ -14,12 +15,13 @@ exports.getBlogs = async function(req, res, next) {
   // Check the existence of the query parameters, if they
   // don't exist set default values
   var genre = req.params.genre;
+  var posted = req.query.posted;
   console.log(genre);
   var page = req.query.page ? req.query.page : 1;
   var limit = req.query.limit ? req.query.limit : 10;
 
   try {
-    var blogs = await BlogService.getBlogs({genre: genre}, page, limit);
+    var blogs = await BlogService.getBlogs({genre: genre, posted: posted}, page, limit);
     //console.log(blogs);
     // Return the blogs list with the appropirate HTTP Status code and message
     return res.status(200).json({
@@ -178,8 +180,9 @@ exports.uploadPicture = async function(req, res, next) {
 
 exports.getTags = async function(req, res, next) {
   console.log("getTags called");
+  let genre = req.params.genre;
   try {
-    var tags = await BlogService.getTags({});
+    var tags = tags[genre];
     console.log(tags);
     return res.status(200).json({
       status: 200,

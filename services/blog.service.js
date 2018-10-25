@@ -1,5 +1,5 @@
 var Blog = require("../models/blog");
-var Tag = require("../models/tag");
+var Tag = require("../models/tags");
 var mongoose = require("mongoose");
 
 _this = this;

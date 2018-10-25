@@ -3,7 +3,7 @@ var router = express.Router();
 var BlogController = require("../../controllers/blog.controller");
 
 router.get("/all/:genre", BlogController.getBlogs);
-router.get("/tags", BlogController.getTags);
+router.get("/tags/:genre", BlogController.getTags);
 router.get("/:blogId", BlogController.getBlog);
 router.post("/create/:genre", BlogController.createBlog);
 router.put("/update", BlogController.updateBlog);
