@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Menu from '../../navigation/Menu';
 import SearchBar from '../search_bar/SearchBar';
 
@@ -54,19 +55,26 @@ const StyledHeader = styled.div`
 `;
 
 class Header extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
-	render() {
-		return(
-			<StyledHeader>
-				<div className="title"><Title>City of Troy</Title></div>
-				<div className="menu"><Menu/></div>
-				<div className="search_bar"><SearchBar /></div>
-			</StyledHeader>
-		);
-	}
+  render() {
+    return (
+      <StyledHeader>
+        <div className="title">
+          <Link style={{ textDecoration: 'none' }} to="/">
+            <Title>
+              City of Troy
+              </Title>
+
+          </Link>
+        </div>
+        <div className="menu"><Menu /></div>
+        <div className="search_bar"><SearchBar /></div>
+      </StyledHeader>
+    );
+  }
 }
 
 export default Header;

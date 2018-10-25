@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import axios from 'axios';
 import Plx from "react-plx";
 import theme from "../../../styles/theme";
 
@@ -128,6 +129,41 @@ const exampleData = [
 class Box extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: '',
+      email: ''
+    }
+    this.nameChangeHandler = this.nameChangeHandler.bind(this);
+    this.emailChangeHandler = this.emailChangeHandler.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  nameChangeHandler(e) {
+    let name = e.target.value;
+    this.setState({ name: name });
+  }
+  emailChangeHandler(e) {
+    let email = e.target.value;
+    this.setState({ email: email })
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log('submit button clicked');
+    let reader = {
+      name: this.state.name.toLowerCase(),
+      email: this.state.email,
+      isSubscriber: false
+    }
+    if (this.state.name === '') {
+      alert('Fill up all fields');
+    } else {
+      axios.post('/readers', { reader }).then(res => {
+        this.setState({
+          name: '',
+          email: ''
+        })
+      })
+    }
   }
 
   render() {
@@ -140,16 +176,24 @@ class Box extends React.Component {
               Hey everyone! Don't want to miss any of my stories? Sign up via
               email to receive updates about my latest and greatest!
             </p>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div className="row">
-                <input className="name" type="text" placeholder="YOUR NAME" />
+                <input
+                  className="name"
+                  type="text"
+                  value={this.state.name}
+                  placeholder="YOUR NAME"
+                  onChange={this.nameChangeHandler}
+                />
                 <Underline />
               </div>
               <div className="row">
                 <input
                   className="email"
                   type="email"
+                  value={this.state.email}
                   placeholder="YOUR EMAIL"
+                  onChange={this.emailChangeHandler}
                 />
                 <Underline />
               </div>
