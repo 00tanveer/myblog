@@ -48,7 +48,7 @@ class App extends Component {
           exact
           strict
           path="/fashion/post/:blogId"
-          render={props => <Editor genre="fashion" auth={auth} {...props} />}
+          render={props => <Editor genre={"fashion"} auth={auth} {...props} />}
         />
       </div>
     );

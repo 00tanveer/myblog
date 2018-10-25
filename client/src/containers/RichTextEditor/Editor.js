@@ -82,19 +82,19 @@ const QuillContainer = styled.div`
 `;
 
 class Editor extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     const { match } = this.props;
-    //console.log(match.params.blogId);
+    let genre = this.props.location.pathname.split('/')[1];
     this.state = {
       editorHtml: "",
       mountedEditor: false,
       blogId: match.params.blogId,
+      genre: genre,
       tags: [],
       selectedTags: [],
       title: ""
     }; // You can also pass a Quill Delta here
-    console.log(this.state.blogId);
     this.quillRef = null;
     this.reactQuillRef = null;
     this.handleChange = this.handleChange.bind(this);
@@ -116,23 +116,21 @@ class Editor extends React.Component {
   componentDidMount() {
     this.attachQuillRefs();
     //console.log('componentDidMount');
-    axios.get("/blogs/tags").then(res => {
+    axios.get(`/blogs/tags/${this.state.genre}`).then(res => {
       let tags = [];
       //console.log(res.data.data);
       tags = res.data.data.map(tag => {
-        return tag.name;
+        return tag;
       });
       this.setState(
         {
           tags: tags
         },
         () => {
-          //console.log(this.state.blogId);
           let path = '/blogs/' + this.state.blogId;
           axios.get(path).then(res => {
-            console.log(res.data.data);
             if (res.data.data.length !== 0) {
-              if(res.data.data.docs[0].delta_ops[0] !== null) {
+              if (res.data.data.docs[0].delta_ops[0] !== null) {
                 this.quillRef.setContents(res.data.data.docs[0].delta_ops);
               }
               this.setState(
@@ -287,7 +285,7 @@ class Editor extends React.Component {
       title: this.state.title,
       tags: this.state.selectedTags,
       delta_ops: this.quillRef.getContents().ops,
-      posted : true
+      posted: true
     }
     console.log(blog);
     axios.put('/blogs/update', { blog }).then(res => {
@@ -312,7 +310,7 @@ class Editor extends React.Component {
     if (this.state.tags.length > 0) {
       Tags = <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20, marginBottom: 40 }}>
         {this.state.tags.map(tag => {
-          //console.log(tag);
+          console.log(tag);
           return (
             <label key={tag} style={{ color: 'white', fontSize: '2rem', margin: 5 }}>
               <input style={{ margin: 5 }} name={tag} checked={this.state.selectedTags.indexOf(tag) > -1} value={tag} type="checkbox" onChange={this.handleInputChange} />
