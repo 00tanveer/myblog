@@ -27,7 +27,7 @@ class Fashion extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/blogs/all/fashion').then(res => {
+    axios.get('/blogs/all/fashion?posted=true').then(res => {
       if (res.data.data.length !== 0) {
         this.setState({
           blogs: res.data.data
