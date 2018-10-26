@@ -3,6 +3,7 @@ import history from '../../history';
 import { withRouter } from 'react-router-dom';
 import ReactQuill from "react-quill";
 import axios from "axios";
+import _ from 'lodash';
 
 import styled from "styled-components";
 import Button from "../../components/ui/Button";
@@ -86,6 +87,7 @@ class Editor extends React.Component {
     super(props);
     const { match } = this.props;
     let genre = this.props.location.pathname.split('/')[1];
+    this.titleInput = React.createRef();
     this.state = {
       editorHtml: "",
       mountedEditor: false,
@@ -93,12 +95,15 @@ class Editor extends React.Component {
       genre: genre,
       tags: [],
       selectedTags: [],
-      title: ""
+      title: "",
+      titleTouched: false
     }; // You can also pass a Quill Delta here
     this.quillRef = null;
     this.reactQuillRef = null;
     this.handleChange = this.handleChange.bind(this);
-    this.onTitleChange = this.onTitleChange.bind(this);
+    //this.onTitleChange = this.onTitleChange.bind(this);
+    this.delayedCallbackForTitleChange = _.debounce(this.callAjaxForTitleChange, 1000);
+    //this.callAjaxForTitleChange = this.callAjaxForTitleChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.imageHandler = this.imageHandler.bind(this);
     this.syntaxButtonHandler = this.syntaxButtonHandler.bind(this);
@@ -142,6 +147,7 @@ class Editor extends React.Component {
                 () => {
                   //console.log(this.state.selectedTags);
                   //console.log(this.quillRef.root.innerHTML);
+                  //this.titleInput.current.value = this.state.title
                 }
               );
             }
@@ -184,8 +190,26 @@ class Editor extends React.Component {
   }
 
   onTitleChange(e) {
-    //console.log(e.target.value);
+    e.persist();
+    console.log(e.target.value);
     let title = e.target.value;
+    this.setState({ title: title });
+    this.delayedCallbackForTitleChange(e);
+    // let blog = {
+    //   id: this.state.blogId,
+    //   title: title,
+    //   tags: this.state.selectedTags,
+    //   delta_ops: this.quillRef.getContents().ops
+    // };
+    // axios.put("/blogs/update", { blog }).then(res => {
+    //   //console.log(res.data);
+    //   this.setState({ title: title });
+    // });
+  }
+
+  callAjaxForTitleChange (event) {
+    let title = event.target.value;
+    console.log(title);
     let blog = {
       id: this.state.blogId,
       title: title,
@@ -310,7 +334,7 @@ class Editor extends React.Component {
     if (this.state.tags.length > 0) {
       Tags = <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20, marginBottom: 40 }}>
         {this.state.tags.map(tag => {
-          console.log(tag);
+          //console.log(tag);
           return (
             <label key={tag} style={{ color: 'white', fontSize: '2rem', margin: 5 }}>
               <input style={{ margin: 5 }} name={tag} checked={this.state.selectedTags.indexOf(tag) > -1} value={tag} type="checkbox" onChange={this.handleInputChange} />
@@ -330,8 +354,9 @@ class Editor extends React.Component {
           </h1>
           <FormInput
             placeholder="Article Title"
+            //value={this.state.titleTouched ? this.state.title : this.state.savedTitle}
             value={this.state.title}
-            onChange={this.onTitleChange}
+            onChange={this.onTitleChange.bind(this)}
           />
           <h1 style={{ marginTop: 40, color: "white", textAlign: "center" }}>
             Blog Body
