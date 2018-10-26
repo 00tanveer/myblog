@@ -18,7 +18,7 @@ const StyledContainer = styled.div`
 class Fashion extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.genre);
+    //console.log(this.props.genre);
     this.state = {
       genre: this.props.genre,
       blogs: []
@@ -31,22 +31,22 @@ class Fashion extends React.Component {
       if (res.data.data.length !== 0) {
         this.setState({
           blogs: res.data.data
-        }, () => console.log(this.state.blogs))
+        })
       }
     })
   }
 
   postButtonHandler() {
     axios.post('/blogs/create/fashion').then(res => {
-      console.log(res.data);
+      //console.log(res.data);
       let blogId = res.data.data._id;
-      history.replace(`/fashion/post/${blogId.toString()}`);
+      history.push(`/fashion/post/${blogId.toString()}`);
     })
   }
 
   render() {
-    console.log(this.state.blogs);
-    console.log(auth.loggedIn());
+    //console.log(this.state.blogs);
+    //console.log(auth.loggedIn());
     return (
       <StyledContainer>
         <Header />

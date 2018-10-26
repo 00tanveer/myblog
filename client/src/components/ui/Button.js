@@ -14,6 +14,7 @@ const Button = props => {
     font-size: 2rem;
     padding: 1.7rem;
     transition: all 200ms ease-in;
+    cursor: pointer;
     &:hover {
       background-color: ${theme.black};
       color: ${theme.white};

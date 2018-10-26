@@ -1,4 +1,5 @@
 import React from "react";
+import history from '../../../history';
 import styled from "styled-components";
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -87,6 +88,7 @@ const Meta = styled.div`
 const Excerpt = styled.div`
   font-size: 1.5rem;
   line-height: 1.4;
+  cursor: pointer;
   p {
     img {
       max-width: 50%;
@@ -104,10 +106,18 @@ const ShareBar = styled.span`
 class Card extends React.Component {
   constructor(props) {
     super(props);
+    this.onCardClick = this.onCardClick.bind(this);
+  }
+
+  onCardClick() {
+    let hyphenatedTitle = this.props.blog.title.split(' ').join('-');
+    console.log(hyphenatedTitle);
+    history.push(`/fashion/${hyphenatedTitle}`);
   }
 
   render() {
-    console.log(typeof this.props.blog.date);
+    //console.log(typeof this.props.blog.date);
+    //console.log(this.props.blog);
     let date = new Date(this.props.blog.date);
     //console.log(typeof date);
     let day = date.getDate();
@@ -122,11 +132,11 @@ class Card extends React.Component {
     let cfg = {};
     let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
     let html = converter.convert();
-    console.log(html);
-    console.log(ReactHtmlParser(html));
+    //console.log(html);
+    //console.log(ReactHtmlParser(html));
     let ExcerptText = ReactHtmlParser(html)[0].props.children[0];
-    console.log(ExcerptText);
-    console.log(typeof ExcerptText);
+    //console.log(ExcerptText);
+    //console.log(typeof ExcerptText);
     let titleImageLink;
     ReactHtmlParser(html).map(obj => {
       if (obj.type === 'p') {
@@ -154,18 +164,18 @@ class Card extends React.Component {
           <Tags>{
             this.props.blog.tags.map((tag) => {
               return(
-                <span><a href="#">{tag}</a>
+                <span key={tag}><a href="#">{tag}</a>
                 </span>
               )
             })
           }</Tags>
           <Title>{this.props.blog.title}</Title>
           <Meta><span>{date}</span></Meta>
-          <Excerpt>
+          <Excerpt onClick={this.onCardClick}>
           {/* Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. */}
             {ExcerptText}
           </Excerpt>
-          <Button label="Read More" />
+          <Button clickHandler={this.onCardClick} label="Read More" />
           <ShareBar>
             <i className="fab fa-facebook" />
             <i className="fab fa-twitter" />
