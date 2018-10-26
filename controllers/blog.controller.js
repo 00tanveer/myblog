@@ -89,11 +89,11 @@ exports.createBlog = async function(req, res, next) {
 
 exports.updateBlog = async function(req, res, next) {
   // Id is necessary for the update
-  if (!req.body.blog.title) {
-    return res
-      .status(400)
-      .json({ status: 400, message: "Title must be present" });
-  }
+  // if (!req.body.blog.title) {
+  //   return res
+  //     .status(400)
+  //     .json({ status: 400, message: "Title must be present" });
+  // }
 
   var title = req.body.blog.title;
   console.log(req.body.blog.id);
