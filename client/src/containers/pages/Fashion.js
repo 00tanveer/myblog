@@ -1,7 +1,6 @@
 import React from "react";
 import history from '../../history';
 import axios from 'axios';
-import _ from 'lodash';
 import styled from 'styled-components';
 import AuthService from '../../utils/AuthService';
 import Header from '../../components/ui/header/Header';

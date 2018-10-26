@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Landing from "./pages/Landing";
+import Article from './pages/Article';
 import Fashion from "./pages/Fashion";
 import Beauty from './pages/Beauty';
 import Art from './pages/Art';
@@ -49,6 +50,12 @@ class App extends Component {
           strict
           path="/fashion/post/:blogId"
           render={props => <Editor genre={"fashion"} auth={auth} {...props} />}
+        />
+        <Route
+          exact
+          strict
+          path="/fashion/:title"
+          render={props => <Article {...props} />}
         />
       </div>
     );
