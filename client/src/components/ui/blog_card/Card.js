@@ -112,19 +112,16 @@ class Card extends React.Component {
   onCardClick() {
     let hyphenatedTitle = this.props.blog.title.split(' ').join('-');
     console.log(hyphenatedTitle);
-    history.push(`/fashion/${hyphenatedTitle}`);
+    history.push(`/fashion/${hyphenatedTitle}-${this.props.blog._id}`);
   }
 
   render() {
-    //console.log(typeof this.props.blog.date);
     //console.log(this.props.blog);
     let date = new Date(this.props.blog.date);
-    //console.log(typeof date);
     let day = date.getDate();
     let year = date.getFullYear();
     let locale = "en-us";
     let month = date.toLocaleString(locale, { month: "long" });
-    //console.log(month);
     date = month + ' ' + day + ', ' + year;
 
     //convert delta ops to html
@@ -132,11 +129,7 @@ class Card extends React.Component {
     let cfg = {};
     let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
     let html = converter.convert();
-    //console.log(html);
-    //console.log(ReactHtmlParser(html));
     let ExcerptText = ReactHtmlParser(html)[0].props.children[0];
-    //console.log(ExcerptText);
-    //console.log(typeof ExcerptText);
     let titleImageLink;
     ReactHtmlParser(html).map(obj => {
       if (obj.type === 'p') {
@@ -148,7 +141,6 @@ class Card extends React.Component {
       }
     })
     return (
-      //<LayoutWrapper>
       <CardContainer>
         <div className="thumbnail">
           <TitleImage>
@@ -182,15 +174,8 @@ class Card extends React.Component {
           </ShareBar>
         </div>
       </CardContainer>
-      //</LayoutWrapper>
     );
   }
 }
-
-// Render Layout React element into the DOM
-//  ReactDOM.render(
-//    <Layout />,
-//    container
-//  )
 
 export default Card;
