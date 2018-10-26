@@ -20,7 +20,8 @@ const CardContainer = styled.div`
     }
   }
   .thumbnail {
-    max-height: 520px;
+    max-height: 445px;
+    max-width: 445px;
     //margin: 10px;
     margin-bottom: 10px;
     > * {
