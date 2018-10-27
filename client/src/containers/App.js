@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Landing from "./pages/Landing";
+import Admin from './pages/Admin';
 import Article from './pages/Article';
 import Fashion from "./pages/Fashion";
 import Beauty from './pages/Beauty';
@@ -40,6 +41,11 @@ class App extends Component {
       <div>
         <Route exact strict path="/" render={props => <Landing {...props} />} />
         <Route exact strict path='/login' render={(props) => <RegisterOrLogin mode={'Login'} {...props} />} />
+        <Route 
+          exact 
+          strict 
+          path="/admin" 
+          render={props => <Admin {...props} />} />
         <Route
           exact
           path="/fashion"
