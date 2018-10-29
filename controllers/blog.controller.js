@@ -63,7 +63,6 @@ exports.getBlog = async function(req, res, next) {
 exports.createBlog = async function(req, res, next) {
   // Req.body contains the form submit values
   var genre = req.params.genre;
-  console.log(req.body);
   var blog = {
     genre: genre,
     title: "",
@@ -89,19 +88,7 @@ exports.createBlog = async function(req, res, next) {
 };
 
 exports.updateBlog = async function(req, res, next) {
-  // Id is necessary for the update
-  // if (!req.body.blog.title) {
-  //   return res
-  //     .status(400)
-  //     .json({ status: 400, message: "Title must be present" });
-  // }
-
   var title = req.body.blog.title;
-  console.log(req.body.blog.id);
-  console.log(title);
-  console.log(req.body.blog.date);
-  console.log(req.body.blog.tags);
-  console.log(req.body.blog.tags.length > 0);
   var blog = {
     id: mongoose.Types.ObjectId(req.body.blog.id),
     date: req.body.blog.date ? req.body.blog.date : null,
@@ -126,8 +113,7 @@ exports.updateBlog = async function(req, res, next) {
 };
 
 exports.removeBlog = async function(req, res, next) {
-  var id = req.params.id;
-
+  var id = mongoose.Types.ObjectId(req.params.id);
   try {
     var deleted = await BlogService.deleteBlog(id);
     return res
