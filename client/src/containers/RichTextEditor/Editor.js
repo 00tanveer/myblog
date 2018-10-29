@@ -91,7 +91,10 @@ class Editor extends React.Component {
     this.state = {
       editorHtml: "",
       mountedEditor: false,
+      loading: true,
       blogId: match.params.blogId,
+      date: null,
+      posted: false,
       genre: genre,
       tags: [],
       selectedTags: [],
@@ -132,14 +135,19 @@ class Editor extends React.Component {
           let path = '/blogs/' + this.state.blogId;
           axios.get(path).then(res => {
             if (res.data.data.length !== 0) {
+              console.log(res.data.data.docs[0]);
               if (res.data.data.docs[0].delta_ops[0] !== null) {
                 this.quillRef.setContents(res.data.data.docs[0].delta_ops);
               }
               this.setState(
                 {
                   blogId: res.data.data.docs[0]._id,
+                  date: res.data.data.docs[0].date,
                   title: res.data.data.docs[0].title,
-                  selectedTags: res.data.data.docs[0].tags
+                  selectedTags: res.data.data.docs[0].tags,
+                  posted: res.data.data.docs[0].posted,
+                  genre: res.data.data.docs[0] && res.data.data.docs[0].genre,
+                  loading: false
                 },
                 () => {
                   //console.log(this.state.selectedTags);
@@ -168,16 +176,20 @@ class Editor extends React.Component {
   };
 
   handleChange(html) {
-    let blog = {
-      id: this.state.blogId,
-      title: this.state.title,
-      tags: this.state.selectedTags,
-      body: "",
-      delta_ops: this.quillRef.getContents().ops
-    };
-    axios.put("/blogs/update", { blog }).then(res => {
-      this.setState({ editorHtml: html });
-    });
+    if (this.state.loading === false) {
+      let blog = {
+        id: this.state.blogId,
+        date: this.state.date,
+        title: this.state.title,
+        tags: this.state.selectedTags,
+        delta_ops: this.quillRef.getContents().ops,
+        posted: this.state.posted
+      };
+      console.log(blog);
+      axios.put("/blogs/update", { blog }).then(res => {
+        this.setState({ editorHtml: html });
+      });
+    }
   }
 
   onTitleChange(e) {
@@ -191,9 +203,11 @@ class Editor extends React.Component {
     let title = event.target.value;
     let blog = {
       id: this.state.blogId,
+      date: this.state.date,
       title: title,
       tags: this.state.selectedTags,
-      delta_ops: this.quillRef.getContents().ops
+      delta_ops: this.quillRef.getContents().ops,
+      posted: this.state.posted
     };
     axios.put("/blogs/update", { blog }).then(res => {
       this.setState({ title: title });
@@ -214,9 +228,11 @@ class Editor extends React.Component {
     //console.log(selectedTags);
     let blog = {
       id: this.state.blogId,
+      date: this.state.date,
       title: this.state.title,
       tags: selectedTags,
-      delta_ops: this.quillRef.getContents().ops
+      delta_ops: this.quillRef.getContents().ops,
+      posted: this.state.posted
     }
     axios.put('/blogs/update', { blog }).then(res => {
       this.setState({ selectedTags: selectedTags }, () => console.log(this.state.selectedTags));
@@ -283,7 +299,7 @@ class Editor extends React.Component {
     console.log(this.quillRef.getSelection());
     let blog = {
       id: this.state.blogId,
-      date: Date.now(),
+      date: this.state.date ? this.state.date : Date.now(),
       title: this.state.title,
       tags: this.state.selectedTags,
       delta_ops: this.quillRef.getContents().ops,

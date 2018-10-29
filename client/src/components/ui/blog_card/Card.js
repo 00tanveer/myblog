@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Button from "../Button";
-// Grid container
+import AuthService from "../../../utils/AuthService";
+
+const auth = new AuthService();
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,6 +39,7 @@ const CardContainer = styled.div`
     max-height: 520px;
     margin: 70px auto;
     .card_text {
+      position: relative;
       max-width: 620px;
       height: 100%;
       margin: 0 30px;
@@ -43,6 +47,20 @@ const CardContainer = styled.div`
       padding: 85px 0;
       > * {
         margin-bottom: 20px;
+      }
+      .controls {
+        position: absolute;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        color: white;
+        top: 20px;
+        font-size: 2rem;
+        i {
+          margin: 10px;
+          cursor: pointer;
+        }
       }
     }
     .thumbnail {
@@ -106,13 +124,28 @@ const ShareBar = styled.span`
 class Card extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loggedIn: auth.loggedIn()
+    }
     this.onCardClick = this.onCardClick.bind(this);
+    this.editHandler = this.editHandler.bind(this);
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
 
   onCardClick() {
     let hyphenatedTitle = this.props.blog.title.split(' ').join('-');
     console.log(hyphenatedTitle);
     history.push(`/fashion/${hyphenatedTitle}-${this.props.blog._id}`);
+  }
+
+  editHandler() {
+    //let confirm = confirm('Do you want to fuck me?');
+    //alert('wtf');
+    history.push(`/${this.props.blog.genre}/post/${this.props.blog._id}`);
+  }
+
+  deleteHandler() {
+    //let confirm = confirm('Do you want to suck my tits?');
   }
 
   render() {
@@ -172,6 +205,10 @@ class Card extends React.Component {
             <i className="fab fa-facebook" />
             <i className="fab fa-twitter" />
           </ShareBar>
+          <div className="controls">
+            <i onClick={this.editHandler} className="fa fa-edit"></i>
+            <i onClick={this.deleteHandler} className="fa fa-trash"></i>
+          </div>
         </div>
       </CardContainer>
     );
