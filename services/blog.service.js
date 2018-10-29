@@ -100,8 +100,8 @@ exports.updateBlog = async function(blog) {
 exports.deleteBlog = async function(id) {
   // Delete the Blog
   try {
-    var deleted = await Blog.remove({ _id: id });
-    if (deleted.result.n === 0) {
+		var deleted = await Blog.remove({ _id: id });
+    if (deleted.n === 0) {
       throw Error("Blog could not be deleted");
     }
     return deleted;
