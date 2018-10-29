@@ -68,6 +68,7 @@ exports.createBlog = async function(req, res, next) {
     genre: genre,
     title: "",
     tags: [],
+    posted: false,
     delta_ops: [{}]
   };
 
@@ -185,12 +186,8 @@ exports.uploadPicture = async function(req, res, next) {
 exports.getTags = async function(req, res, next) {
   console.log("getTags called");
   let genre = req.params.genre;
-  console.log(config);
-  console.log(tags);
-  console.log(genre);
   try {
     var ts = tags[genre];
-    console.log(ts);
     return res.status(200).json({
       status: 200,
       data: ts,
