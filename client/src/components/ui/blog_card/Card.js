@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import history from '../../../history';
 import styled from "styled-components";
 import theme from '../../../styles/theme';
@@ -136,6 +137,8 @@ class Card extends React.Component {
     this.onCardClick = this.onCardClick.bind(this);
     this.editHandler = this.editHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.deleteNegativeHandler = this.deleteNegativeHandler.bind(this);
+    this.deletePositiveHandler = this.deletePositiveHandler.bind(this);
   }
 
   onCardClick() {
@@ -152,6 +155,21 @@ class Card extends React.Component {
   deleteHandler() {
     let value = this.state.deletePromptDisplay;
     this.setState({ deletePromptDisplay: !value });
+  }
+  deleteNegativeHandler() {
+    let value = this.state.deletePromptDisplay;
+    this.setState({ deletePromptDisplay: !value });
+  }
+
+  deletePositiveHandler() {
+    let value = this.state.deletePromptDisplay;
+    axios.delete(`/blogs/remove/${this.props.blog._id}`).then(res => {
+      console.log(res.data);
+      this.setState({ deletePromptDisplay: !value }, () => {
+        window.location.reload();
+      });
+    })
+    
   }
 
   render() {
@@ -216,7 +234,10 @@ class Card extends React.Component {
             <i onClick={this.deleteHandler} className="fa fa-trash"></i>
           </div>
         </div>
-        <Prompt display={this.state.deletePromptDisplay} clickHandler={this.deleteHandler}/>
+        <Prompt 
+          display={this.state.deletePromptDisplay} 
+          deleteNegative={this.deleteNegativeHandler} 
+          deletePositive={this.deletePositiveHandler}/>
       </CardContainer>
     );
   }

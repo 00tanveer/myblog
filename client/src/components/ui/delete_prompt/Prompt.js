@@ -11,8 +11,7 @@ const StyledContainer = styled.div`
 	left: 0;
 	top: 0;
 	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4);
-	opacity: 0.9;
+	background-color: rgba(0,0,0,0.8);
 	margin: 0;
 	z-index: 4000;
 `;
@@ -49,8 +48,8 @@ const Prompt = (props) => {
 			<Box>
 				<p>Are you sure you want to delete this article?</p>
 				<div className="buttons">
-					<Button label="Yes" />
-					<Button clickHandler={props.clickHandler} label="No" />
+					<Button clickHandler={props.deletePositive} label="Yes" />
+					<Button clickHandler={props.deleteNegative} label="No" />
 				</div>
 			</Box>
 		</StyledContainer>
