@@ -1,9 +1,11 @@
 import React from "react";
 import history from '../../../history';
 import styled from "styled-components";
+import theme from '../../../styles/theme';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Button from "../Button";
+import Prompt from '../delete_prompt/Prompt';
 import AuthService from "../../../utils/AuthService";
 
 const auth = new AuthService();
@@ -60,6 +62,9 @@ const CardContainer = styled.div`
         i {
           margin: 10px;
           cursor: pointer;
+          &:hover {
+            color: ${theme.maroon}
+          }
         }
       }
     }
@@ -125,7 +130,8 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: auth.loggedIn()
+      loggedIn: auth.loggedIn(),
+      deletePromptDisplay: false
     }
     this.onCardClick = this.onCardClick.bind(this);
     this.editHandler = this.editHandler.bind(this);
@@ -139,13 +145,13 @@ class Card extends React.Component {
   }
 
   editHandler() {
-    //let confirm = confirm('Do you want to fuck me?');
     //alert('wtf');
     history.push(`/${this.props.blog.genre}/post/${this.props.blog._id}`);
   }
 
   deleteHandler() {
-    //let confirm = confirm('Do you want to suck my tits?');
+    let value = this.state.deletePromptDisplay;
+    this.setState({ deletePromptDisplay: !value });
   }
 
   render() {
@@ -210,6 +216,7 @@ class Card extends React.Component {
             <i onClick={this.deleteHandler} className="fa fa-trash"></i>
           </div>
         </div>
+        <Prompt display={this.state.deletePromptDisplay} clickHandler={this.deleteHandler}/>
       </CardContainer>
     );
   }
