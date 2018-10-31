@@ -41,10 +41,10 @@ class App extends Component {
       <div>
         <Route exact strict path="/" render={props => <Landing {...props} />} />
         <Route exact strict path='/login' render={(props) => <RegisterOrLogin mode={'Login'} {...props} />} />
-        <Route 
-          exact 
-          strict 
-          path="/admin" 
+        <Route
+          exact
+          strict
+          path="/admin"
           render={props => <Admin {...props} />} />
         <Route
           exact
@@ -63,6 +63,11 @@ class App extends Component {
           path="/fashion/:title"
           render={props => <Article {...props} />}
         />
+        <Route
+          exact
+          strict
+          path="/contact"
+          render={props => <Contact {...props} />} />
       </div>
     );
   }
