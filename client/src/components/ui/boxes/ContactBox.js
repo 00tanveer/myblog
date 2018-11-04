@@ -211,7 +211,7 @@ class Box extends React.Component {
 									onChange={this.messageChangeHandler}
 								/>
 							</div>
-              <Button label="SIGN ME UP" />
+              <Button label="SEND MESSAGE" />
             </form>
           </div>
       </StyledBox>
