@@ -4,8 +4,9 @@ var mongoosePaginate = require("mongoose-paginate");
 var readerSchema = new mongoose.Schema({
   name: String,
   email: String,
+  subject: String,
   isSubscriber: Boolean,
-  messages: [String]
+  message: String
 });
 
 readerSchema.plugin(mongoosePaginate);
