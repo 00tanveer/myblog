@@ -19,8 +19,9 @@ exports.createReader = async function(req, res, next) {
   var reader = {
     name: req.body.reader.name,
     email: req.body.reader.email,
+    subject: req.body.reader.subject ? [req.body.reader.subject] : null,
     isSubscriber: req.body.reader.isSubscriber,
-    messages: req.body.reader.message ? [req.body.reader.message] : []
+    message: req.body.reader.message ? [req.body.reader.message] : null
   };
 
   try {
