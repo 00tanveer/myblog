@@ -152,7 +152,7 @@ class Box extends React.Component {
     let reader = {
       name: this.state.name.toLowerCase(),
       email: this.state.email,
-      isSubscriber: false
+      isSubscriber: true
     }
     if (this.state.name === '') {
       alert('Fill up all fields');

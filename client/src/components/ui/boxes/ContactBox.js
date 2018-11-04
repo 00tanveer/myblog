@@ -141,7 +141,9 @@ class Box extends React.Component {
     console.log('submit button clicked');
     let reader = {
       name: this.state.name.toLowerCase(),
-      email: this.state.email,
+			email: this.state.email,
+			subject: this.state.subject,
+			message: this.state.message,
       isSubscriber: false
     }
 		if (this.state.name === '' ||
@@ -152,8 +154,12 @@ class Box extends React.Component {
       axios.post('/readers', { reader }).then(res => {
         this.setState({
           name: '',
-          email: ''
-        })
+					email: '',
+					subject: '',
+					message: ''
+        }, () => {
+					window.location.reload();
+				})
       })
     }
   }
