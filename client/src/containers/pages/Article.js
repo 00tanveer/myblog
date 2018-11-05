@@ -50,6 +50,7 @@ class Article extends React.Component {
 		this.quillRef = null;
 		this.reactQuillRef = null;
 		this.attachQuillRefs = this.attachQuillRefs.bind(this);
+		this.shareHandler = this.shareHandler.bind(this);
 	}
 
 	componentDidMount() {
@@ -72,6 +73,16 @@ class Article extends React.Component {
 		const quillRef = this.reactQuillRef.getEditor();
 		if (quillRef != null) this.quillRef = quillRef;
 	};
+
+	shareHandler() {
+		console.log('heyey');
+		window.FB.ui({
+			method: 'share',
+			//href: 'https://developers.facebook.com/docs/'
+			//href: window.location.href
+			href: `https://cityoftroy-backend.herokuapp.com${window.location.pathname}`
+		}, function(response){});
+	}
 
 	render() {
 
@@ -108,7 +119,8 @@ class Article extends React.Component {
 						defaultValue={this.state.editorHtml}
 					/>
 				</Body>
-				<Engagement />
+				<Engagement 
+					shareHandler={this.shareHandler}/>
 				<Footer />
 			</StyledContainer>
 		);

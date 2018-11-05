@@ -21,14 +21,14 @@ const StyledContainer = styled.div`
 	}
 `;
 
-const Engagement = () => {
+const Engagement = (props) => {
 	return(
 		<StyledContainer>
 			<button>Like</button>
 			<span>•</span>
 			<button>Comment</button>
 			<span>•</span>
-			<button><i className="fab fa-facebook"/> Share</button>
+			<button onClick={props.shareHandler}><i className="fab fa-facebook"/> Share</button>
 		</StyledContainer>
 	);
 }
