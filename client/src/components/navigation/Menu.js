@@ -242,6 +242,11 @@ class Menu extends React.Component {
             <nav className="navi">
               <ul className="list_">
                 <li className="item">
+                  <Link to="/about" className="link_">
+                    About Me
+                  </Link>
+                </li>
+                <li className="item">
                   <Link to="/fashion" className="link_">
                     Fashion
                   </Link>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Landing from "./pages/Landing";
 import Admin from './pages/Admin';
 import Article from './pages/Article';
+import About from './pages/About';
 import Fashion from "./pages/Fashion";
 import Beauty from './pages/Beauty';
 import Art from './pages/Art';
@@ -46,6 +47,11 @@ class App extends Component {
           strict
           path="/admin"
           render={props => <Admin {...props} />} />
+        <Route
+          exact
+          strict
+          path="/about"
+          render={props => <About {...props} />} />
         <Route
           exact
           path="/fashion"
