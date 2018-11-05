@@ -7,7 +7,13 @@ var blogSchema = new mongoose.Schema({
   tags: [String],
   delta_ops: [{}],
   genre: String,
-  posted: { type: Boolean, default: false }
+  posted: { type: Boolean, default: false },
+  likedBy: [
+    {
+      name: String,
+      
+    }
+  ]
 });
 
 blogSchema.plugin(mongoosePaginate);

@@ -6,6 +6,7 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Header from '../../components/ui/header/Header';
 import Footer from '../../components/ui/footer/Footer';
+import Engagement from '../../components/ui/engagement/Engagement';
 
 const StyledContainer = styled.div`
 	margin-bottom: 80px;
@@ -15,7 +16,7 @@ const StyledContainer = styled.div`
 const Title = styled.p`
 	font-size: 6rem;
 	text-align: center;
-	margin-top: 140px;;
+	margin-top: 140px;
 `;
 
 const Meta = styled.div`
@@ -107,6 +108,7 @@ class Article extends React.Component {
 						defaultValue={this.state.editorHtml}
 					/>
 				</Body>
+				<Engagement />
 				<Footer />
 			</StyledContainer>
 		);
