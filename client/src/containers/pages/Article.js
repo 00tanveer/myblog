@@ -80,7 +80,8 @@ class Article extends React.Component {
 			method: 'share',
 			//href: 'https://developers.facebook.com/docs/'
 			//href: window.location.href
-			href: `https://cityoftroy-backend.herokuapp.com${window.location.pathname}`
+			href: `https://cityoftroy-backend.herokuapp.com${window.location.pathname}`,
+			quote: `${this.state.blog.title}`
 		}, function(response){});
 	}
 
