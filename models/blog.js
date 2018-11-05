@@ -11,7 +11,14 @@ var blogSchema = new mongoose.Schema({
   likedBy: [
     {
       name: String,
-      
+      email: String
+    }
+  ],
+  commentedBy: [
+    {
+      name: String,
+      email: String,
+      message: String
     }
   ]
 });
