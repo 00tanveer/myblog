@@ -191,6 +191,9 @@ class Card extends React.Component {
       ExcerptText = '<Nothing written yet>';
     } else {
       ExcerptText = ReactHtmlParser(html)[0].props.children[0];
+      let snipped = ExcerptText.props.children[0].substring(0, 200);
+      snipped = snipped + '...';
+      ExcerptText.props.children[0] = snipped;
     }
     let titleImageLink;
     ReactHtmlParser(html).map(obj => {
