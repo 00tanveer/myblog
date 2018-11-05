@@ -173,7 +173,6 @@ class Card extends React.Component {
   }
 
   render() {
-    //console.log(this.props.blog);
     let date = new Date(this.props.blog.date);
     let day = date.getDate();
     let year = date.getFullYear();
@@ -237,10 +236,15 @@ class Card extends React.Component {
             <i className="fab fa-facebook" />
             <i className="fab fa-twitter" />
           </ShareBar>
-          <div className="controls">
-            <i onClick={this.editHandler} className="fa fa-edit"></i>
-            <i onClick={this.deleteHandler} className="fa fa-trash"></i>
-          </div>
+          {
+            auth.loggedIn() ?
+            <div className="controls">
+              <i onClick={this.editHandler} className="fa fa-edit"></i>
+              <i onClick={this.deleteHandler} className="fa fa-trash"></i>
+            </div> :
+            null
+          }
+          
         </div>
         <Prompt 
           display={this.state.deletePromptDisplay} 
