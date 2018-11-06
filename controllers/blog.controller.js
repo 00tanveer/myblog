@@ -112,6 +112,21 @@ exports.updateBlog = async function(req, res, next) {
   }
 };
 
+exports.updateBlogLikes = async function(req, res, next) {
+  let blogId = mongoose.Types.ObjectId(req.params.id);
+  try {
+    var updatedBlog = await BlogService.updateBlogLikes(blogId);;
+    return res.status(200).json({
+      status: 200, 
+      data: updatedBlog,
+      message: "Successfully updated blog"
+    });
+  } catch (e) {
+    console.log(e.message);
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+}
+
 exports.removeBlog = async function(req, res, next) {
   var id = mongoose.Types.ObjectId(req.params.id);
   try {
