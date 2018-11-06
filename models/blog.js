@@ -8,7 +8,7 @@ var blogSchema = new mongoose.Schema({
   delta_ops: [{}],
   genre: String,
   posted: { type: Boolean, default: false },
-  likes: Number,
+  likes: { type: Number, default: 0},
   commentedBy: [
     {
       name: String,
