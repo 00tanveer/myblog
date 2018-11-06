@@ -9,12 +9,12 @@ const StyledContainer = styled.div`
 		cursor: pointer;
 		margin: 10px;
 		padding: 5px 9px;
-		background-color: ${theme.maroon};
+		background-color: ${theme.black};
 		border: 1px solid ${theme.white};
-		border-radius: 10px;
+		//border-radius: 10px;
 		transition: all 200ms ease-in;
 		&:hover {
-			background-color: ${theme.black};
+			background-color: ${theme.maroon};
 			color: ${theme.white};
 			transform: scale(1.1);
 		}
@@ -24,7 +24,7 @@ const StyledContainer = styled.div`
 const Engagement = (props) => {
 	return(
 		<StyledContainer>
-			<button>Like</button>
+			<button onClick={props.likeHandler}><span>{props.likes} </span>Like</button>
 			<span>•</span>
 			<button>Comment</button>
 			<span>•</span>

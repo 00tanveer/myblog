@@ -50,6 +50,7 @@ class Article extends React.Component {
 		this.quillRef = null;
 		this.reactQuillRef = null;
 		this.attachQuillRefs = this.attachQuillRefs.bind(this);
+		this.likeHandler = this.likeHandler.bind(this);
 		this.shareHandler = this.shareHandler.bind(this);
 	}
 
@@ -73,6 +74,14 @@ class Article extends React.Component {
 		const quillRef = this.reactQuillRef.getEditor();
 		if (quillRef != null) this.quillRef = quillRef;
 	};
+
+	likeHandler() {
+		axios.put(`/blogs/update/likes/${this.state.blogId}`).then(res => {
+			let blog = this.state.blog;
+			blog.likes += 1;
+			this.setState({ blog: blog});
+		})
+	}
 
 	shareHandler() {
 		console.log('heyey');
@@ -121,6 +130,8 @@ class Article extends React.Component {
 					/>
 				</Body>
 				<Engagement 
+					likes={this.state.blog.likes ? this.state.blog.likes : 0}
+					likeHandler={this.likeHandler}
 					shareHandler={this.shareHandler}/>
 				<Footer />
 			</StyledContainer>

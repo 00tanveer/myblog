@@ -195,11 +195,14 @@ class Card extends React.Component {
       ExcerptText.props.children[0] = snipped;
     }
     let titleImageLink;
+    let found = false;
+    console.log(ReactHtmlParser(html));
     ReactHtmlParser(html).map(obj => {
-      if (obj.type === 'p') {
+      if (obj.type === 'p' && !found) {
         obj.props.children.map(obj2 => {
-          if (obj2.type === 'img') {
+          if (obj2.type === 'img' && !found) {
             titleImageLink = obj2.props.src;
+            found = true;
           }
         })
       }
