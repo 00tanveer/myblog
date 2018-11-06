@@ -59,31 +59,6 @@ exports.createBlog = async function(blog) {
 exports.updateBlog = async function(blog) {
   var title = blog.title;
   var id = mongoose.Types.ObjectId(blog.id);
-  // try{
-  // 	// find the old Blog objectt by the id
-  // 	var oldBlog = await Blog.findById(title);
-  // } catch(e){
-  // 	throwError("Error occurred while finding the Blog")
-  // }
-  // //If no old Blog Object exists return false
-  // if(!oldBlog){
-  // 	return false;
-  // }
-  // console.log(oldBlog)
-  // //Edit the Blog Object
-  // oldBlog.title = blog.title
-  // oldBlog.body = blog.body
-  // oldBlog.delta_ops = blog.delta_ops
-
-  // console.log(oldBlog)
-
-  // try{
-  // 	var savedBlog = await oldBlog.save()
-  // 	return savedBlog
-  // } catch(e){
-  // 	throw Error("An Error occurred while updating the Blog")
-  // }
-
   var query = { _id: id };
   var update = blog;
   var options = { upsert: true, new: true, setDefaultsOnInsert: true };
@@ -96,6 +71,20 @@ exports.updateBlog = async function(blog) {
     }
   });
 };
+
+exports.updateBlogLikes = async function(blogId) {
+  await Blog.findOneAndUpdate(
+    {_id: blogId},
+    {$inc: {likes: 1}}, 
+    function(err, result) {
+      if (err) {
+        throw Error(err);
+      } else {
+        return result;
+      }
+    }
+  );
+}
 
 exports.deleteBlog = async function(id) {
   // Delete the Blog
