@@ -7,6 +7,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 import Header from '../../components/ui/header/Header';
 import Footer from '../../components/ui/footer/Footer';
 import Engagement from '../../components/ui/engagement/Engagement';
+import Prompt from '../../components/ui/comment_prompt/Prompt';
 
 const StyledContainer = styled.div`
 	margin-bottom: 80px;
@@ -43,14 +44,16 @@ class Article extends React.Component {
 		this.state = {
 			title: match.params.title,
 			blogId: blogId,
-			blog: {},
+      blog: {},
+      commentPromptDisplay: false,
 			//quill states
-			editorHtml: ''
+			editorHtml: '',
 		}
 		this.quillRef = null;
 		this.reactQuillRef = null;
 		this.attachQuillRefs = this.attachQuillRefs.bind(this);
 		this.likeHandler = this.likeHandler.bind(this);
+		this.commentHandler = this.commentHandler.bind(this);
 		this.shareHandler = this.shareHandler.bind(this);
 	}
 
@@ -81,6 +84,12 @@ class Article extends React.Component {
 			blog.likes += 1;
 			this.setState({ blog: blog});
 		})
+	}
+
+	commentHandler() {
+		let value = this.state.commentPromptDisplay;
+		console.log(value);
+		this.setState({ commentPromptDisplay: !value });
 	}
 
 	shareHandler() {
@@ -132,8 +141,14 @@ class Article extends React.Component {
 				<Engagement 
 					likes={this.state.blog.likes ? this.state.blog.likes : 0}
 					likeHandler={this.likeHandler}
+					commentHandler={this.commentHandler}
 					shareHandler={this.shareHandler}/>
 				<Footer />
+				<Prompt 
+          display={this.state.commentPromptDisplay} 
+          blog={this.state.blog}
+					commentPromptHandler={this.commentHandler}
+				/>
 			</StyledContainer>
 		);
 	}

@@ -26,7 +26,7 @@ const Engagement = (props) => {
 		<StyledContainer>
 			<button onClick={props.likeHandler}><span>{props.likes} </span>Like</button>
 			<span>•</span>
-			<button>Comment</button>
+			<button onClick={props.commentHandler}>Comment</button>
 			<span>•</span>
 			<button onClick={props.shareHandler}><i className="fab fa-facebook"/> Share</button>
 		</StyledContainer>
