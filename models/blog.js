@@ -13,7 +13,8 @@ var blogSchema = new mongoose.Schema({
     {
       name: String,
       email: String,
-      comment: String
+      comment: String,
+      date: { type: mongoose.Schema.Types.Date, default: Date.now() }
     }
   ]
 });
