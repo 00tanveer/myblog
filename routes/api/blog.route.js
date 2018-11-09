@@ -8,6 +8,7 @@ router.get("/:blogId", BlogController.getBlog);
 router.post("/create/:genre", BlogController.createBlog);
 router.put("/update/likes/:id", BlogController.updateBlogLikes);
 router.put("/update", BlogController.updateBlog);
+router.post("/comments/:id", BlogController.postComment);
 router.delete("/remove/:id", BlogController.removeBlog);
 router.post("/uploadPicture", BlogController.uploadPicture);
 
