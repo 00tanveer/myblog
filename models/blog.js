@@ -13,7 +13,7 @@ var blogSchema = new mongoose.Schema({
     {
       name: String,
       email: String,
-      message: String
+      comment: String
     }
   ]
 });
