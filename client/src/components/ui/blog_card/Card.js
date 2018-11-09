@@ -143,7 +143,6 @@ class Card extends React.Component {
 
   onCardClick() {
     let hyphenatedTitle = this.props.blog.title.split(' ').join('-');
-    console.log(hyphenatedTitle);
     history.push(`/fashion/${hyphenatedTitle}-${this.props.blog._id}`);
   }
 
@@ -164,7 +163,6 @@ class Card extends React.Component {
   deletePositiveHandler() {
     let value = this.state.deletePromptDisplay;
     axios.delete(`/blogs/remove/${this.props.blog._id}`).then(res => {
-      console.log(res.data);
       this.setState({ deletePromptDisplay: !value }, () => {
         window.location.reload();
       });
@@ -196,7 +194,6 @@ class Card extends React.Component {
     }
     let titleImageLink;
     let found = false;
-    console.log(ReactHtmlParser(html));
     ReactHtmlParser(html).map(obj => {
       if (obj.type === 'p' && !found) {
         obj.props.children.map(obj2 => {

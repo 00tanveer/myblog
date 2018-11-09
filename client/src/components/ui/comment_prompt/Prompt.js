@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Box from '../boxes/CommentBox';
 
 const StyledContainer = styled.div`
-	display: ${props => props.display ? 'flex' : 'none'};
+	display: flex;
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
@@ -35,13 +35,10 @@ class Prompt extends React.Component {
   }
 
   setWrapperRef(node) {
-    console.log(node);
     this.wrapperRef = node;
   }
 
   handleClickOutside(event) {
-    console.log(event.target);
-    console.log(this.wrapperRef); 
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
       this.props.commentPromptHandler();
     }

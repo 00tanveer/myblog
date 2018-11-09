@@ -59,7 +59,6 @@ class Article extends React.Component {
 
 	componentDidMount() {
 		axios.get(`/blogs/${this.state.blogId}`).then(res => {
-			console.log(res.data.data.docs[0]);
 			this.setState({blog: res.data.data.docs[0]});
 			this.quillRef.setContents(res.data.data.docs[0].delta_ops);
 			this.quillRef.disable();
@@ -88,12 +87,10 @@ class Article extends React.Component {
 
 	commentHandler() {
 		let value = this.state.commentPromptDisplay;
-		console.log(value);
 		this.setState({ commentPromptDisplay: !value });
 	}
 
 	shareHandler() {
-		console.log('heyey');
 		window.FB.ui({
 			method: 'share',
 			//href: 'https://developers.facebook.com/docs/'
@@ -118,7 +115,6 @@ class Article extends React.Component {
     let converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
 		let html = converter.convert();
 		const ArticleBody = ReactHtmlParser(html);
-		console.log(ArticleBody);
 		//quill config
 		const modules = {
 			toolbar : false
@@ -144,11 +140,15 @@ class Article extends React.Component {
 					commentHandler={this.commentHandler}
 					shareHandler={this.shareHandler}/>
 				<Footer />
-				<Prompt 
-          display={this.state.commentPromptDisplay} 
-          blog={this.state.blog}
-					commentPromptHandler={this.commentHandler}
-				/>
+        {
+          this.state.commentPromptDisplay ?
+          <Prompt 
+            //display={this.state.commentPromptDisplay} 
+            blog={this.state.blog}
+            commentPromptHandler={this.commentHandler}
+          /> :
+          null
+        }
 			</StyledContainer>
 		);
 	}
