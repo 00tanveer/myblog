@@ -86,6 +86,20 @@ exports.updateBlogLikes = async function(blogId) {
   );
 }
 
+exports.postComment = async function(blogId, commenter) {
+  await Blog.findOneAndUpdate(
+    {_id: blogId},
+    {$push: {commentedBy: commenter}},
+    function(err, result) {
+      if (err) {
+        throw Error(err);
+      } else {
+        return result;
+      }
+    }
+  );
+}
+
 exports.deleteBlog = async function(id) {
   // Delete the Blog
   try {
