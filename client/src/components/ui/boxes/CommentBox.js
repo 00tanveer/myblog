@@ -140,7 +140,6 @@ class Box extends React.Component {
 	}
   handleSubmit(e) {
     e.preventDefault();
-    console.log('submit button clicked');
     let commenter = {
       name: this.state.name.toLowerCase(),
 			email: this.state.email,
